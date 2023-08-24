@@ -12,6 +12,9 @@ int _printf(const char *format, ...)
 	int char_printed = 0;
 	va_list inputs;
 
+	if (!format)
+		return (1);
+
 	va_start(inputs, format);
 
 	for (i = 0; i < length; i++)
@@ -34,6 +37,7 @@ int _printf(const char *format, ...)
 
 }
 
+
 /**
  * got_percent - print %s and %c and %%
  *
@@ -54,12 +58,22 @@ int got_percent(va_list arg, char c)
 		char *string = va_arg(arg, char *);
 
 		_puts(string);
-		return (_strlen(string));
+		if (string)
+			return (_strlen(string));
+		else
+			return (6);
 	}
 	else if (c == '%')
 	{
 		_putchar('%');
 		return (1);
 	}
-	return (0);
+	else if (c == '\0')
+	{
+		return (1);
+	}
+	else
+	{
+		return (2);
+	}
 }
