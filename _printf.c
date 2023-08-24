@@ -13,7 +13,7 @@ int _printf(const char *format, ...)
 	va_list inputs;
 
 	if (!format)
-		return (1);
+		return (-1);
 
 	va_start(inputs, format);
 
@@ -70,10 +70,12 @@ int got_percent(va_list arg, char c)
 	}
 	else if (c == '\0')
 	{
-		return (1);
+		return (-1);
 	}
 	else
 	{
+		_putchar('%');
+		_putchar(c);
 		return (2);
 	}
 }
