@@ -7,7 +7,7 @@
  * Return: Nothing
  */
 
-void _puts(char *str)
+void _puts(char *str, int *printed)
 {
 	char c;
 	int i = 0;
@@ -18,18 +18,18 @@ void _puts(char *str)
 		while (*(str + i) != '\0')
 		{
 			c = *(str + i);
-			_putchar(c);
+			*printed += _putchar(c);
 			i++;
 		}
 	}
 	else
 	{
-		_putchar('(');
-		_putchar('n');
-		_putchar('u');
-		_putchar('l');
-		_putchar('l');
-		_putchar(')');
+		*printed += _putchar('(');
+		*printed += _putchar('n');
+		*printed += _putchar('u');
+		*printed += _putchar('l');
+		*printed += _putchar('l');
+		*printed += _putchar(')');
 	}
 
 }
