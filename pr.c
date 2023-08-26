@@ -63,6 +63,10 @@ void got_percent(va_list arg, char c, int *printed)
 	{
 		*printed = -1;
 	}
+	else if (c == 'i' || c == 'd')
+	{
+		_puts(_itoa(va_arg(arg, long)), printed);
+	}
 	else
 	{
 		*printed +=_putchar('%');
