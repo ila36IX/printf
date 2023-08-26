@@ -4,6 +4,8 @@
  * _puts - Print string in stdout
  *
  * @str: The string
+ * @printed: Pointer to the integer
+ * the _printf will return
  * Return: Nothing
  */
 
