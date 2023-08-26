@@ -6,7 +6,7 @@
  * @i: integer
  * Return: Nothing
  */
-char *_itoa(long i)
+char *_itoa(int i)
 {
 	int a, rest, j = 0;
 	int is_negative = 0;
