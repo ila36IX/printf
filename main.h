@@ -10,6 +10,6 @@ int _putchar(char c);
 void _puts(char *str, int *printed);
 int _printf(const char *format, ...);
 int _strlen(const char *s);
-char *_itoa(int i);
+char *_itoa(long i);
 
 #endif /* _MAIN_H */

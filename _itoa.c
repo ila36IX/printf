@@ -6,11 +6,19 @@
  * @i: integer
  * Return: Nothing
  */
-char *_itoa(int i)
+char *_itoa(long i)
 {
 	int a, rest, j = 0;
 	int is_negative = 0;
-	char *str = malloc(sizeof(char) * 20);
+	char *str = NULL;
+
+	str = malloc(sizeof(char) * 20);
+
+	if (i > INT_MAX)
+	{
+		while (i > INT_MAX)
+			i = i + INT_MIN;
+	}
 
 	if (i == 0)
 	{
@@ -30,6 +38,7 @@ char *_itoa(int i)
 		i /= 10;
 		j++;
 	}
+
 	if (is_negative == 1)
 	{
 		str[j] = '-';
@@ -45,7 +54,7 @@ char *_itoa(int i)
 		str[a] = str[j - a - 1];
 		str[j - a - 1] = holder;
 	}
-
+	
 	return (str);
 }
 
