@@ -11,6 +11,6 @@ void _puts(char *str, int *printed);
 int _printf(const char *format, ...);
 int _strlen(const char *s);
 char *_itoa(long i);
-int to_binary(unsigned int n);
+int print_any_base(unsigned int n, int base, int to_lower);
 
 #endif /* _MAIN_H */

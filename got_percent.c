@@ -36,7 +36,23 @@ void got_percent(va_list arg, char c, int *printed)
 		break;
 
 	case 'b':
-		*printed += to_binary(va_arg(arg, int));
+		*printed += print_any_base(va_arg(arg, unsigned int), 2, 0);
+		break;
+
+	case 'u':
+		*printed += print_any_base(va_arg(arg, unsigned int), 10, 0);
+		break;
+
+	case 'o':
+		*printed += print_any_base(va_arg(arg, unsigned int), 8, 0);
+		break;
+
+	case 'x':
+		*printed += print_any_base(va_arg(arg, unsigned int), 16, 1);
+		break;
+
+	case 'X':
+		*printed += print_any_base(va_arg(arg, unsigned int), 16, 0);
 		break;
 
 	default:
