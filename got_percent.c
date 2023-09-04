@@ -30,11 +30,6 @@ void got_percent(va_list arg, char c, int *printed)
 		*printed = -1;
 		break;
 
-	case 'i':
-	case 'd':
-		_puts(_itoa(va_arg(arg, int)), printed);
-		break;
-
 	case 'b':
 		*printed += print_any_base(va_arg(arg, unsigned int), 2, 0);
 		break;
@@ -54,9 +49,7 @@ void got_percent(va_list arg, char c, int *printed)
 	case 'X':
 		*printed += print_any_base(va_arg(arg, unsigned int), 16, 0);
 		break;
-
 	default:
-		*printed += _putchar('%');
-		*printed += _putchar(c);
+		got_percent_N1(arg, c, printed);
 	}
 }

@@ -19,7 +19,21 @@ int _printf(const char *format, ...)
 
 	for (i = 0; i < length; i++)
 	{
-		if (*(format + i) == '%')
+		if (format[i] == '%' && (format[i + 1] == ' ' ||
+					format[i + 1] == '+' ||
+					format[i + 1] == '#'))
+		{
+			char N3[3] = {'\0', '\0', '\0'};
+			int index = 0;
+
+			while (format[index + i] && index <= 2)
+			{
+				N3[index] = format[index + i + 1];
+				index++;
+			}
+			i += print_by_N3(inputs, N3[0], N3[1], N3[2], &char_printed);
+		}
+		else if (*(format + i) == '%')
 		{
 			char next_char = *(format + i + 1);
 
