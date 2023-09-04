@@ -43,8 +43,8 @@ int hash_case(va_list arg, char c1, char c2, char c3, int *printed)
 
 	if (n == 0)
 	{
-		*printed += 2;
-		return (_printf("00"));
+		*printed += 1;
+		return (_printf("0"));
 	}
 	else if (c2 == 'o')
 	{
@@ -80,9 +80,13 @@ int plus_space_case(va_list arg, char c1, char c2, char c3, int *printed)
 	if (c2 == 'd' || c2 == 'i' || c3 == 'd' || c3 == 'i')
 	{
 		n = va_arg(arg, int);
-		if (n > 0)
+		if (n >= 0 && c1 == '+')
 		{
 			*printed += _putchar('+');
+		}
+		else if(n >= 0 && c1 == ' ')
+		{
+			*printed += _putchar(' ');
 		}
 		_puts(_itoa(n), printed);
 	}
