@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include <stdio.h>
-#include "../libft/libft.h"
+#include "libft/libft.h"
 
 #ifndef FT_LIBFT
 #define FT_LIBFT

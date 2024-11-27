@@ -1,51 +1,37 @@
-/*Test "s" flag without bonus*/
+/*Test "p" flag without bonus*/
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
 
 int	ft_printf(const char *s, ...);
 
-void test_c_flag(int (*f)(const char *s, ...))
+void test_p_flag(int (*f)(const char *s, ...), void *p, void *pp)
 {
 	int return_value;
 
-	return_value = f("%s", "Heatblast");
+	return_value = f("%p", p);
 	printf("\nReturn value: [%d]\n", return_value);
-
-	return_value = f("%s%s", "Heatblast", "AlienX");
+	return_value = f("&%p&", p);
 	printf("\nReturn value: [%d]\n", return_value);
-
-	return_value = f("%s%s", "", "");
+	return_value = f("&%p&%p", p, pp);
 	printf("\nReturn value: [%d]\n", return_value);
-
-	return_value = f("%s1%s2%s3%s4%s5%s%s%s%s%s%s%s-", "", "", "", "", "", "", "a", "", "", "", "", "");
+	return_value = f("%p%p%p%p%p", p, p, p, p, p);
 	printf("\nReturn value: [%d]\n", return_value);
-
-	return_value = f("%s%s%s%s%s%s%s%s%s%s%s%s-", "", "", "", "", "", "", "", "", "", "", "", "");
+	return_value = f("%p/%p?%p*%p0%p", p, p, p, p, pp);
 	printf("\nReturn value: [%d]\n", return_value);
-
-	return_value = f("%s", "");
+	return_value = f("%p/%p?%p*%p0%p", NULL, p, pp, p, pp);
 	printf("\nReturn value: [%d]\n", return_value);
-
-	return_value = f("%s", NULL);
+	return_value = f("%p%p%p%p%p", NULL, NULL, p, p, p);
 	printf("\nReturn value: [%d]\n", return_value);
-
-	return_value = f(" %s%s ", NULL, NULL);
+	return_value = f("%p%p%p%p%p", NULL, NULL, p, p, p);
 	printf("\nReturn value: [%d]\n", return_value);
-
-	return_value = f("%s%s%s", NULL, NULL, "");
+	return_value = f("%p%p%p%p%p", 0x7ffc5183bfc01337, NULL, 0, p, p);
 	printf("\nReturn value: [%d]\n", return_value);
-
-	return_value = f("%s%s%s", NULL, NULL, "", "XLR8");
+	return_value = f("%p%p%p%p%p", 0x7ffc5183bfc01337, NULL, 0, -1, p);
 	printf("\nReturn value: [%d]\n", return_value);
-
-	return_value = f("%s-%s-%s", "2024", "11", "27");
+	return_value = f("%p%p%p%p%p$", 0x7ffc5183bfc01337, NULL, 0, -1, p);
 	printf("\nReturn value: [%d]\n", return_value);
-	/* Very long string char */
-	char long_string[1000];
-	memset(long_string, 'x', 999);
-	long_string[999] = '\0';
-	return_value = f("%s", long_string);
+	return_value = f("%p%p%p%p%p$$", 0x7ffc5183bfc01337, NULL, 0, -1, p);
 	printf("\nReturn value: [%d]\n", return_value);
 }
 
@@ -58,9 +44,9 @@ int main(int ac, char **av)
 		return (0);
 	}
 	if (strcmp(av[1], "org") == 0)
-		test_c_flag(printf);
+		test_p_flag(printf, (void *)0x7ffc5183bfc0, (void *)0x7ffdb8616ca0);
 	else if (strcmp(av[1], "you") == 0)
-		test_c_flag(ft_printf);
+		test_p_flag(ft_printf, (void *)0x7ffc5183bfc0, (void *)0x7ffdb8616ca0);
 	else
 		printf("Unkown flag\n");
 }

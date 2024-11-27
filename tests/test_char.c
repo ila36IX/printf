@@ -1,4 +1,4 @@
-/*-Test "c" flag-without bonus*/
+/*Test "c" flag without bonus*/
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>

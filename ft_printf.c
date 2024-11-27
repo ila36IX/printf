@@ -88,6 +88,7 @@ int	ft_printf(const char *s, ...)
 			write(1, s++, 1);
 			count++;
 		}
+
 	}
 	return (count);
 }

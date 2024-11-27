@@ -22,22 +22,24 @@ yellow='\033[0;33m'
 # create the logs directory if it doesn't exists
 [ ! -d "$logDir" ] && mkdir -p "$logDir"
 
-find tests -type f -name "*.c" | while read -r file; do
+find tests -type f -name "*.c" | sort | while read -r file; do
 	you="$logDir/$(basename "$file" ".c").you"
 	org="$logDir/$(basename "$file" ".c").org"
 	gcc "$file" ft_printf.c helper_functions.c $libft -o run
 	./run you > $you
 	if [ $? -eq 139 ]; then
-		echo "${red}You code sefFaults${clr_off}"
-		echo "gcc "$file" ft_printf.c helper_functions.c $libft -o run && ./run you"
+		echo "${red}Your code segFaults after:${clr_off}"
+		echo "${red}gcc "$file" ft_printf.c helper_functions.c $libft -o run && ./run you${clr_off}"
+		echo "segFault starts here" >> $you
 	fi
 	./run org > $org
 	if [ $? -eq 139 ]; then
-		echo "${red}You code sefFaults${clr_off}"
-		echo "gcc "$file" ft_printf.c helper_functions.c $libft -o run && ./run org"
+		echo "${red}Your code segFaults after:${clr_off}"
+		echo "${red}gcc "$file" ft_printf.c helper_functions.c $libft -o run && ./run you${clr_off}"
+		echo "segFault starts here" >> $you
 	fi
 	# test description
-        test=$(head -1 "$file" | awk -F- '{print $2}')
+        test=$(head -1 "$file" | awk -F'*' '{print $2}')
 	# if there is any diffs between the two outputs
 	# the next if will be excuted
 	diff_output=$(diff --color=auto  $you $org -y)
