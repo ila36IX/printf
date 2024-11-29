@@ -49,11 +49,13 @@ void ft_putchar(int *count, va_list args, flags_t *flags)
 {
 	char c;
 
-	if (flags->pad)
+	if (flags->pad && !flags->minus)
 		ft_putnchar(' ', flags->pad - 1, count);
 	c = (char)va_arg(args, int);
 	write(1, &c, 1);
 	++*count;
+	if (flags->pad && flags->minus)
+		ft_putnchar(' ', flags->pad - 1, count);
 }
 
 /*
@@ -66,22 +68,19 @@ void ft_putchar(int *count, va_list args, flags_t *flags)
  */
 void ft_putstr(int *count, va_list args, flags_t *flags)
 {
-	char *s;
-	(void) flags;
+	char	*s;
+	int		len;
 
 	s = va_arg(args, char *);
 	if (!s)
-	{
-		ft_putnchar(' ',flags->pad - 6, count);
-		*count += write(1, "(null)", 6);
-		return ;
-	}
-	ft_putnchar(' ', flags->pad - ft_strlen(s), count);
-	while (s && *s)
-	{
-		write(1, s++, 1);
-		++*count;
-	}
+		s = "(null)";
+	len = ft_strlen(s);
+	if (!flags->minus)
+		ft_putnchar(' ', flags->pad - len, count);
+	while (*s)
+		*count += write(1, s++, 1);
+	if (flags->minus)
+		ft_putnchar(' ', flags->pad - len, count);
 }
 
 /* this function does not hondle the case where the number is negative*/
@@ -162,6 +161,12 @@ void ft_putnbr_base_big(unsigned long long int n, int *count, char *base, int b)
 	}
 }
 
+int ft_ptrlen(unsigned long long int n, int b)
+{
+	if (n < (unsigned long long int) b)
+		return (1);
+	return (ft_ptrlen(n / b, b) + 1);
+}
 
 /*
  * ft_putnbr_base - Hondler of the p flag
@@ -173,19 +178,22 @@ void ft_putnbr_base_big(unsigned long long int n, int *count, char *base, int b)
  */
 void ft_putptr(int *count, va_list args, flags_t *flags)
 {
-	void *p;
-	(void) flags;
+	unsigned long long int p;
+	int len;
 
-	p = va_arg(args, void *);
+	p = (unsigned long long int)va_arg(args, void *);
 	if (!p)
+		*count += write(1, "(nil)", 5);
+	else
 	{
-		write(1, "(nil)", 5);
-		*count += 5;
-		return ;
+		len = ft_ptrlen(p, 16) + 2;
+		if (!flags->minus)
+			ft_putnchar(' ', flags->pad - len, count);
+		*count += write(1, "0x", 2);
+		ft_putnbr_base_big((unsigned long long int)p, count, BASE16_LOWER, 16);
+		if (flags->minus)
+			ft_putnchar(' ', flags->pad - len, count);
 	}
-	write(1, "0x", 2);
-	*count = *count + 2;
-	ft_putnbr_base_big((unsigned long long int)p, count, BASE16_LOWER, 16);
 }
 
 
