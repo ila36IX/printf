@@ -11,6 +11,8 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	ar rsc $@ $?
 
+bonus: $(OBJ)
+	ar rsc $@ $?
 
 clean:
 	@$(RM) *.o
