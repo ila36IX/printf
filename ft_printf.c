@@ -29,6 +29,8 @@ char parse_flags(const char **s, flags_t *flags)
 		flags->zero = 1;
 	else if (**s == '.' && !flags->dot)
 		flags->dot = 1;
+	else if (ft_isdigit(**s) && flags->dot)
+		flags->dotpad = flags->dotpad * 10 + **s - '0';
 	else if (ft_isdigit(**s))
 		flags->pad = flags->pad * 10 + **s - '0';
 	else if (**s == '#')
@@ -42,6 +44,7 @@ char parse_flags(const char **s, flags_t *flags)
 void init_flags(flags_t *flags)
 {
 	flags->pad = 0;
+	flags->dotpad = 0;
 	flags->minus = 0;
 	flags->zero = 0;
 	flags->dot= 0;
@@ -57,6 +60,7 @@ void	print_parsed_flags(flags_t *flags)
 	printf("-      %d\n", flags->minus);
 	printf("0      %d\n", flags->zero);
 	printf(".      %d\n", flags->dot);
+	printf("dotpad %d\n", flags->dotpad);
 	printf("hash   %d\n", flags->hash);
 	printf("+      %d\n", flags->plus);
 	printf("space  %d\n", flags->space);
@@ -79,7 +83,7 @@ int	ft_printf(const char *s, ...)
 			s++;
 			init_flags(&flags);
 			c = parse_flags(&s, &flags);
-			// print_parsed_flags(&flags);
+			//print_parsed_flags(&flags);
 			if (c)
 				get_handler(c)(&count, args, &flags);
 		}

@@ -5,6 +5,8 @@
 
 int main()
 {
-	printf("UINTPTR_MAX as pointer: %p\n", (void*)UINTPTR_MAX);
-	ft_printf("UINTPTR_MAX as pointer: %p\n", (void*)UINTPTR_MAX);
+	printf("->%-8.4d\n", 13370);
+	ft_printf("=>%-8.4d\n", 13370);
+	// f("%11d", INT_MIN);
+
 }

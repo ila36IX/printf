@@ -11,6 +11,31 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
+
+void	print_parsed_flags(flags_t *flags);
+
+int ft_nbrlen(long int n, int b)
+{
+	if (n < 0)
+		return (ft_nbrlen(n*-1, b) + 1);
+	if (n < b)
+		return (1);
+	return (ft_nbrlen(n / b, b) + 1);
+}
+
+void ft_putnchar(char c, int n, int *count)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		write(1, &c, 1);
+		i++;
+		(*count)++;
+	}
+}
 
 /*
  * ft_putchar - Hondler of the c flag
@@ -23,8 +48,9 @@
 void ft_putchar(int *count, va_list args, flags_t *flags)
 {
 	char c;
-	(void) flags;
 
+	if (flags->pad)
+		ft_putnchar(' ', flags->pad - 1, count);
 	c = (char)va_arg(args, int);
 	write(1, &c, 1);
 	++*count;
@@ -45,11 +71,29 @@ void ft_putstr(int *count, va_list args, flags_t *flags)
 
 	s = va_arg(args, char *);
 	if (!s)
+	{
+		ft_putnchar(' ',flags->pad - 6, count);
 		*count += write(1, "(null)", 6);
+		return ;
+	}
+	ft_putnchar(' ', flags->pad - ft_strlen(s), count);
 	while (s && *s)
 	{
 		write(1, s++, 1);
 		++*count;
+	}
+}
+
+/* this function does not hondle the case where the number is negative*/
+void ft_putnbrb_rec(long int n, int *count, char *base, int b)
+{
+	++*count;
+	if (n < b)
+		write(1, &base[n], 1);
+	else
+	{
+		ft_putnbrb_rec(n / b, count, base, b);
+		write(1, &base[n % b], 1);
 	}
 }
 
@@ -68,22 +112,26 @@ void ft_putstr(int *count, va_list args, flags_t *flags)
  * to the unisgned long long int, that will cause an overflew
  * so that's why we needed a custom function (look: ft_putnbr_base_big)
  */
-void ft_putnbr_base(long int n, int *count, char *base, int b)
+void ft_putnbr_base(long int n, int *count, char *base, flags_t *flags)
 {
+	int nbrsize;
+
+	nbrsize = ft_nbrlen(n, ft_strlen(base));
 	if (n < 0)
 	{
-		write(1, "-", 1);
-		++*count;
+		(*count) += write(1, "-", 1);
 		n *= -1;
+		if (flags->dotpad)
+			nbrsize--;
 	}
-	++*count;
-	if (n < b)
-		write(1, &base[n], 1);
-	else
+	if (flags->pad && !flags->minus)
 	{
-		ft_putnbr_base(n / b, count, base, b);
-		write(1, &base[n % b], 1);
+		if (flags->dot)
+			ft_putnchar('0', flags->dotpad - nbrsize , count);
+		else if (flags->zero)
+			ft_putnchar('0', flags->pad - nbrsize , count);
 	}
+	ft_putnbrb_rec(n, count, base, ft_strlen(base));
 }
 
 /*
@@ -93,7 +141,7 @@ void ft_putnbr_base(long int n, int *count, char *base, int b)
  * you need to change it's prototype wich will cause
  * losing some types that are not unsigned
  *
- * @n: Pointer casted to ulli
+ * @n:Big nuber that can hondle into ptr max value 
  * @count: Pointer to the counter that keeps track of
  * many printed characters, that varaible that will be
  * returned later from printf
@@ -104,12 +152,6 @@ void ft_putnbr_base(long int n, int *count, char *base, int b)
  */
 void ft_putnbr_base_big(unsigned long long int n, int *count, char *base, int b)
 {
-	if (n < 0)
-	{
-		write(1, "-", 1);
-		++*count;
-		n *= -1;
-	}
 	++*count;
 	if (n < b)
 		write(1, &base[n], 1);
@@ -143,25 +185,55 @@ void ft_putptr(int *count, va_list args, flags_t *flags)
 	}
 	write(1, "0x", 2);
 	*count = *count + 2;
-	ft_putnbr_base_big((unsigned long long int)p, count, "0123456789abcdef", 16);
+	ft_putnbr_base_big((unsigned long long int)p, count, BASE16_LOWER, 16);
 }
 
+
+void addition_flags(long int n, int *count,flags_t *flags, char *base)
+{
+	int nbrsize;
+
+	nbrsize = ft_nbrlen(n, ft_strlen(base));
+	if (flags->dotpad > nbrsize)
+	{
+		nbrsize = flags->dotpad;
+		if (n < 0)
+			nbrsize++;
+	}
+	if (flags->pad > 0)
+	{
+		if (flags->minus)
+		{
+			ft_putnbr_base(n, count, base, flags);
+			ft_putnchar(' ', flags->pad - nbrsize, count);
+		}
+		else if ((!flags->minus && !flags->zero) || flags->dot)
+		{
+			ft_putnchar(' ', flags->pad - nbrsize , count);
+			ft_putnbr_base(n, count, base, flags);
+		}
+		else
+			ft_putnbr_base(n, count, base, flags);
+
+	}
+	else
+		ft_putnbr_base(n, count, base, flags);
+}
 
 /*
  * ft_putnbr - Hondler of the i flag
  * @count: Pointer to the conter that keeps track of
  * @args: Function varaidic arguments
- * @flags: Struct contains extra specifiers used with p flag
+ * @flags: Struct contains extra specifiers used with the flag
  *
  * Return: None
  */
 void ft_putnbr(int *count, va_list args, flags_t *flags)
 {
 	int	n;
-	(void) flags;
 
-	n = va_arg(args, int);
-	ft_putnbr_base(n, count, "0123456789", 10);
+	n = (int) va_arg(args, int);
+	addition_flags(n, count, flags, BASE10);
 }
 
 /*
@@ -178,7 +250,7 @@ void ft_putunbr(int *count, va_list args, flags_t *flags)
 	(void) flags;
 
 	n = va_arg(args, int);
-	ft_putnbr_base(n, count, "0123456789", 10);
+	addition_flags(n, count, flags, BASE10);
 }
 
 /*
@@ -195,7 +267,7 @@ void ft_putnbrX(int *count, va_list args, flags_t *flags)
 	(void) flags;
 
 	n = va_arg(args, int);
-	ft_putnbr_base((unsigned int)n, count, "0123456789ABCDEF", 16);
+	addition_flags((unsigned int)n, count, flags, BASE16_UPPER);
 }
 
 /*
@@ -212,7 +284,7 @@ void ft_putnbrx(int *count, va_list args, flags_t *flags)
 	(void) flags;
 
 	n = va_arg(args, int);
-	ft_putnbr_base((unsigned int)n, count, "0123456789abcdef", 16);
+	addition_flags((unsigned int)n, count, flags, BASE16_LOWER);
 }
 
 

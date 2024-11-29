@@ -23,6 +23,7 @@ typedef struct flags_t {
 	int minus;
 	int zero;
 	int dot;
+	int dotpad;
 	int hash;
 	int space;
 	int plus;
@@ -40,5 +41,8 @@ void ft_putcharC(int *count, va_list args, flags_t flags);
 void (*get_handler(char c))(int *count, va_list args, flags_t *flags);
 
 int	ft_isdigit(int c);
+#define BASE16_LOWER "0123456789abcdef"
+#define BASE16_UPPER "0123456789ABCDEF"
+#define BASE10 "0123456789"
 
 #endif
