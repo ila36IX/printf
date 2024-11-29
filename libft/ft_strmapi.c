@@ -12,11 +12,6 @@
 
 #include "libft.h"
 
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}					t_list;
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
 	char			*buff;

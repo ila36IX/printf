@@ -153,7 +153,7 @@ void ft_putnbr_base(long int n, int *count, char *base, flags_t *flags)
 void ft_putnbr_base_big(unsigned long long int n, int *count, char *base, int b)
 {
 	++*count;
-	if (n < b)
+	if (n < (unsigned long long int)b)
 		write(1, &base[n], 1);
 	else
 	{
@@ -298,8 +298,8 @@ void ft_putnbrx(int *count, va_list args, flags_t *flags)
  */
 void ft_putpersent(int *count, va_list args, flags_t *flags)
 {
-	int	n;
 	(void) flags;
+	(void) args;
 
 	write(1, "%", 1);
 	(*count)++;
