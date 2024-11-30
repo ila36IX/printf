@@ -25,6 +25,7 @@ typedef struct flags_t {
 	int dot;
 	int dotpad;
 	int hash;
+	char *hashprefix;
 	int space;
 	int plus;
 	int pad;
