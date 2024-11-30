@@ -1,6 +1,6 @@
 CC = @cc
 CFLAGS = -Wall -Wextra -Werror
-LIBFT = $(wildcard libft/*.c) $(wildcard *.c)
+LIBFT = $(wildcard libft/*.c) ft_printf.c  helper_functions.c
 OBJ = $(LIBFT:%.c=%.o)
 NAME = libftprintf.a
 RM = rm -f

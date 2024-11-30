@@ -75,10 +75,11 @@ void ft_putstr(int *count, va_list args, flags_t *flags)
 	if (!s)
 		s = "(null)";
 	len = ft_strlen(s);
+	if (flags->dot && flags->dotpad < len)
+		len = flags->dotpad;
 	if (!flags->minus)
 		ft_putnchar(' ', flags->pad - len, count);
-	while (*s)
-		*count += write(1, s++, 1);
+	*count += write(1, s++, len);
 	if (flags->minus)
 		ft_putnchar(' ', flags->pad - len, count);
 }
@@ -115,6 +116,8 @@ void ft_putnbr_base(long int n, int *count, char *base, flags_t *flags)
 {
 	int nbrsize;
 
+	if (flags->hash && n)
+		*count += write(1, flags->hashprefix, ft_strlen(flags->hashprefix));
 	nbrsize = ft_nbrlen(n, ft_strlen(base));
 	if (n < 0)
 	{
@@ -123,7 +126,11 @@ void ft_putnbr_base(long int n, int *count, char *base, flags_t *flags)
 		if (flags->dotpad)
 			nbrsize--;
 	}
-	if (flags->pad && !flags->minus)
+	else if (flags->plus)
+		*count += write(1, "+", 1);
+	else if (flags->space)
+		*count += write(1, " ", 1);
+	if (flags->pad || flags->dotpad)
 	{
 		if (flags->dot)
 			ft_putnchar('0', flags->dotpad - nbrsize , count);
@@ -275,6 +282,8 @@ void ft_putnbrX(int *count, va_list args, flags_t *flags)
 	(void) flags;
 
 	n = va_arg(args, int);
+	if (flags->hash)
+		flags->hashprefix = "0X";
 	addition_flags((unsigned int)n, count, flags, BASE16_UPPER);
 }
 
@@ -292,6 +301,8 @@ void ft_putnbrx(int *count, va_list args, flags_t *flags)
 	(void) flags;
 
 	n = va_arg(args, int);
+	if (flags->hash)
+		flags->hashprefix = "0x";
 	addition_flags((unsigned int)n, count, flags, BASE16_LOWER);
 }
 
