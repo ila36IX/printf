@@ -12,13 +12,25 @@
 
 #include "ft_printf.h"
 
+void	init_flags(flags_t *flags)
+{
+	flags->pad = 0;
+	flags->dotpad = 0;
+	flags->minus = 0;
+	flags->zero = 0;
+	flags->dot = 0;
+	flags->hash = 0;
+	flags->hashprefix = NULL;
+	flags->plus = 0;
+	flags->space = 0;
+}
 
 int	ft_printf(const char *s, ...)
 {
-	int count;
-	char c;
+	int		count;
+	char	c;
 	va_list	args;
-	flags_t flags;
+	flags_t	flags;
 
 	va_start(args, s);
 	count = 0;
@@ -37,7 +49,6 @@ int	ft_printf(const char *s, ...)
 			write(1, s++, 1);
 			count++;
 		}
-
 	}
 	return (count);
 }

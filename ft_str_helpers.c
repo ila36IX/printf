@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void ft_putnchar(char c, int n, int *count)
+void	ft_putnchar(char c, int n, int *count)
 {
 	int	i;
 
@@ -33,9 +33,9 @@ void ft_putnchar(char c, int n, int *count)
  *
  * Return: None
  */
-void ft_putchar(int *count, va_list args, flags_t *flags)
+void	ft_putchar(int *count, va_list args, flags_t *flags)
 {
-	char c;
+	char	c;
 
 	if (flags->pad && !flags->minus)
 		ft_putnchar(' ', flags->pad - 1, count);
@@ -54,7 +54,7 @@ void ft_putchar(int *count, va_list args, flags_t *flags)
  *
  * Return: None
  */
-void ft_putstr(int *count, va_list args, flags_t *flags)
+void	ft_putstr(int *count, va_list args, flags_t *flags)
 {
 	char	*s;
 	int		len;
@@ -65,7 +65,7 @@ void ft_putstr(int *count, va_list args, flags_t *flags)
 		if (flags->dot && (!flags->dotpad || flags->dotpad < 5))
 		{
 			ft_putnchar(' ', flags->pad, count);
-			return;
+			return ;
 		}
 		s = "(null)";
 	}
@@ -86,11 +86,11 @@ void ft_putstr(int *count, va_list args, flags_t *flags)
  *
  * Return: None
  */
-void ft_putpersent(int *count, va_list args, flags_t *flags)
-{
-	(void) flags;
-	(void) args;
 
+void	ft_putpersent(int *count, va_list args, flags_t *flags)
+{
+	(void)flags;
+	(void)args;
 	write(1, "%", 1);
 	(*count)++;
 }

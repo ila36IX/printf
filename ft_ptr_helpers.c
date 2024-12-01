@@ -20,10 +20,10 @@
  *
  * Return: None
  */
-void ft_putptr(int *count, va_list args, flags_t *flags)
+void	ft_putptr(int *count, va_list args, flags_t *flags)
 {
-	unsigned long long int p;
-	int len;
+	unsigned long long int	p;
+	int						len;
 
 	p = (unsigned long long int)va_arg(args, void *);
 	if (!p)
@@ -45,20 +45,22 @@ void ft_putptr(int *count, va_list args, flags_t *flags)
 			ft_putnchar(' ', flags->pad - len, count);
 	}
 }
-int ft_ptrlen(unsigned long long int n, int b)
+
+int	ft_ptrlen(unsigned long long int n, int b)
 {
-	if (n < (unsigned long long int) b)
+	if (n < (unsigned long long int)b)
 		return (1);
 	return (ft_ptrlen(n / b, b) + 1);
 }
+
 /*
  * ft_putnbr_base_big - this functions is needed to
- * hondle the case where UINTPTR_MAX is giving you 
+ * hondle the case where UINTPTR_MAX is giving you
  * can't use the basic putnbr_base that is because
  * you need to change it's prototype wich will cause
  * losing some types that are not unsigned
  *
- * @n:Big nuber that can hondle into ptr max value 
+ * @n:Big nuber that can hondle into ptr max value
  * @count: Pointer to the counter that keeps track of
  * many printed characters, that varaible that will be
  * returned later from printf
@@ -67,7 +69,8 @@ int ft_ptrlen(unsigned long long int n, int b)
  *
  * Return: None
  */
-void ft_putnbr_base_big(unsigned long long int n, int *count, char *base, int b)
+void	ft_putnbr_base_big(unsigned long long int n, int *count, char *base,
+		int b)
 {
 	++*count;
 	if (n < (unsigned long long int)b)

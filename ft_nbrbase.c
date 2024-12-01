@@ -12,13 +12,21 @@
 
 #include "ft_printf.h"
 
-int ft_nbrlen(long int n, int b)
+int	ft_nbrlen(long int n, int b)
 {
 	if (n < 0)
-		return (ft_nbrlen(n*-1, b) + 1);
+		return (ft_nbrlen(n * -1, b) + 1);
 	if (n < b)
 		return (1);
 	return (ft_nbrlen(n / b, b) + 1);
+}
+
+void	prefix_zero(int nbrsize, int *count, flags_t *flags)
+{
+	if (flags->dot)
+		ft_putnchar('0', flags->dotpad - nbrsize, count);
+	else if (flags->zero)
+		ft_putnchar('0', flags->pad - nbrsize, count);
 }
 
 /*
@@ -36,9 +44,10 @@ int ft_nbrlen(long int n, int b)
  * to the unisgned long long int, that will cause an overflew
  * so that's why we needed a custom function (look: ft_putnbr_base_big)
  */
-void ft_putnbr_base(long int n, int *count, char *base, flags_t *flags)
+void	ft_putnbr_base(long int n, int *count, char *base, flags_t *flags)
 {
-	int nbrsize;
+	int	nbrsize;
+
 	if (flags->hash && n)
 		*count += write(1, flags->hashprefix, ft_strlen(flags->hashprefix));
 	nbrsize = ft_nbrlen(n, ft_strlen(base));
@@ -54,19 +63,14 @@ void ft_putnbr_base(long int n, int *count, char *base, flags_t *flags)
 	else if (flags->space)
 		*count += write(1, " ", 1);
 	if (flags->pad || flags->dotpad)
-	{
-		if (flags->dot)
-			ft_putnchar('0', flags->dotpad - nbrsize , count);
-		else if (flags->zero)
-			ft_putnchar('0', flags->pad - nbrsize , count);
-	}
+		prefix_zero(nbrsize, count, flags);
 	if (flags->dot && !flags->dotpad && !n)
 		return ;
 	ft_putnbrb_rec(n, count, base, ft_strlen(base));
 }
 
 /* this function does not hondle the case where the number is negative*/
-void ft_putnbrb_rec(long int n, int *count, char *base, int b)
+void	ft_putnbrb_rec(long int n, int *count, char *base, int b)
 {
 	++*count;
 	if (n < b)
@@ -77,5 +81,3 @@ void ft_putnbrb_rec(long int n, int *count, char *base, int b)
 		write(1, &base[n % b], 1);
 	}
 }
-
-

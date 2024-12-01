@@ -12,9 +12,9 @@
 
 #include "ft_printf.h"
 
-void addition_flags(long int n, int *count,flags_t *flags, char *base)
+int	padsize(long int n, flags_t *flags, char *base)
 {
-	int nbrsize;
+	int	nbrsize;
 
 	nbrsize = ft_nbrlen(n, ft_strlen(base));
 	if (flags->dotpad >= nbrsize)
@@ -23,6 +23,14 @@ void addition_flags(long int n, int *count,flags_t *flags, char *base)
 		if (n < 0)
 			nbrsize++;
 	}
+	return (nbrsize);
+}
+
+void	addition_flags(long int n, int *count, flags_t *flags, char *base)
+{
+	int	nbrsize;
+
+	nbrsize = padsize(n, flags, base);
 	if (flags->pad > 0)
 	{
 		if (flags->dot && !flags->dotpad && !n)
@@ -39,37 +47,16 @@ void addition_flags(long int n, int *count,flags_t *flags, char *base)
 		}
 		else
 			ft_putnbr_base(n, count, base, flags);
-
 	}
 	else
 		ft_putnbr_base(n, count, base, flags);
 }
 
-/*
- * get_handler - Search through the hondled spesifiers using
- * the flag charachter
- * @c: The spesifier character (charachter next to % sign) 
- *
- * Return: Pointer of the function the will proprely hondle the giving flag
- * Or NULL if not hondler founded
- * The struct contains {0, NULL} just to give while the stop point
- */
-void (*get_handler(char c))(int *count, va_list args, flags_t *flags)
+void	(*search_by_flag(char c, ftf_t ctofunc[]))(int *count, va_list args,
+	flags_t *flags)
 {
 	int	i;
-	ftf_t ctofunc[] = {
-		{'c', ft_putchar},
-		{'s', ft_putstr},
-		{'p', ft_putptr},
-		{'d', ft_putnbr},
-		{'i', ft_putnbr},
-		{'u', ft_putunbr},
-		{'x', ft_putnbrx},
-		{'X', ft_putnbrX},
-		{'%', ft_putpersent},
-		{0, NULL}
-	};
-	
+
 	i = 0;
 	while (ctofunc[i].f)
 	{
@@ -80,9 +67,43 @@ void (*get_handler(char c))(int *count, va_list args, flags_t *flags)
 	return (NULL);
 }
 
-char parse_flags(const char **s, flags_t *flags)
+/*
+ * get_handler - Search through the hondled spesifiers using
+ * the flag charachter
+ * @c: The spesifier character (charachter next to % sign)
+ *
+ * Return: Pointer of the function the will proprely hondle the giving flag
+ * Or NULL if not hondler founded
+ * The struct contains {0, NULL} just to give while the stop point
+ */
+void	(*get_handler(char c))(int *count, va_list args, flags_t *flags)
 {
-	char *valid_specs;
+	ftf_t	ctofunc[9];
+
+	ctofunc[0].c = 'c';
+	ctofunc[0].f = ft_putchar;
+	ctofunc[1].c = 's';
+	ctofunc[1].f = ft_putstr;
+	ctofunc[2].c = 'p';
+	ctofunc[2].f = ft_putptr;
+	ctofunc[3].c = 'd';
+	ctofunc[3].f = ft_putnbr;
+	ctofunc[4].c = 'i';
+	ctofunc[4].f = ft_putnbr;
+	ctofunc[5].c = 'u';
+	ctofunc[5].f = ft_putunbr;
+	ctofunc[6].c = 'x';
+	ctofunc[6].f = ft_putnbr16_lower;
+	ctofunc[7].c = 'X';
+	ctofunc[7].f = ft_putnbr16_upper;
+	ctofunc[8].c = '%';
+	ctofunc[8].f = ft_putpersent;
+	return (search_by_flag(c, ctofunc));
+}
+
+char	parse_flags(const char **s, flags_t *flags)
+{
+	char	*valid_specs;
 
 	valid_specs = "cspdiuxX%";
 	if (ft_strchr(valid_specs, **s))
@@ -107,17 +128,4 @@ char parse_flags(const char **s, flags_t *flags)
 		return (0);
 	(*s)++;
 	return (parse_flags(s, flags));
-}
-
-void init_flags(flags_t *flags)
-{
-	flags->pad = 0;
-	flags->dotpad = 0;
-	flags->minus = 0;
-	flags->zero = 0;
-	flags->dot= 0;
-	flags->hash= 0;
-	flags->hashprefix= NULL;
-	flags->plus= 0;
-	flags->space= 0;
 }

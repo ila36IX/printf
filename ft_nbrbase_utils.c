@@ -20,14 +20,13 @@
  *
  * Return: None
  */
-void ft_putnbr(int *count, va_list args, flags_t *flags)
+void	ft_putnbr(int *count, va_list args, flags_t *flags)
 {
 	int	n;
 
-	n = (int) va_arg(args, int);
+	n = (int)va_arg(args, int);
 	addition_flags(n, count, flags, BASE10);
 }
-
 
 /*
  * ft_putunbr - Hondler of the [u]nsigned flag
@@ -37,11 +36,11 @@ void ft_putnbr(int *count, va_list args, flags_t *flags)
  *
  * Return: None
  */
-void ft_putunbr(int *count, va_list args, flags_t *flags)
+void	ft_putunbr(int *count, va_list args, flags_t *flags)
 {
 	unsigned int	n;
-	(void) flags;
 
+	(void)flags;
 	n = va_arg(args, int);
 	addition_flags(n, count, flags, BASE10);
 }
@@ -54,11 +53,11 @@ void ft_putunbr(int *count, va_list args, flags_t *flags)
  *
  * Return: None
  */
-void ft_putnbrX(int *count, va_list args, flags_t *flags)
+void	ft_putnbr16_upper(int *count, va_list args, flags_t *flags)
 {
 	int	n;
-	(void) flags;
 
+	(void)flags;
 	n = va_arg(args, int);
 	if (flags->hash)
 		flags->hashprefix = "0X";
@@ -73,11 +72,11 @@ void ft_putnbrX(int *count, va_list args, flags_t *flags)
  *
  * Return: None
  */
-void ft_putnbrx(int *count, va_list args, flags_t *flags)
+void	ft_putnbr16_lower(int *count, va_list args, flags_t *flags)
 {
 	int	n;
-	(void) flags;
 
+	(void)flags;
 	n = va_arg(args, int);
 	if (flags->hash)
 		flags->hashprefix = "0x";
