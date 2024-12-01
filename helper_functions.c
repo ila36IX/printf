@@ -73,7 +73,14 @@ void ft_putstr(int *count, va_list args, flags_t *flags)
 
 	s = va_arg(args, char *);
 	if (!s)
+	{
+		if (flags->dot && (!flags->dotpad || flags->dotpad < 5))
+		{
+			ft_putnchar(' ', flags->pad, count);
+			return;
+		}
 		s = "(null)";
+	}
 	len = ft_strlen(s);
 	if (flags->dot && flags->dotpad < len)
 		len = flags->dotpad;
@@ -115,7 +122,6 @@ void ft_putnbrb_rec(long int n, int *count, char *base, int b)
 void ft_putnbr_base(long int n, int *count, char *base, flags_t *flags)
 {
 	int nbrsize;
-
 	if (flags->hash && n)
 		*count += write(1, flags->hashprefix, ft_strlen(flags->hashprefix));
 	nbrsize = ft_nbrlen(n, ft_strlen(base));
@@ -137,6 +143,8 @@ void ft_putnbr_base(long int n, int *count, char *base, flags_t *flags)
 		else if (flags->zero)
 			ft_putnchar('0', flags->pad - nbrsize , count);
 	}
+	if (flags->dot && !flags->dotpad && !n)
+		return ;
 	ft_putnbrb_rec(n, count, base, ft_strlen(base));
 }
 
@@ -190,7 +198,13 @@ void ft_putptr(int *count, va_list args, flags_t *flags)
 
 	p = (unsigned long long int)va_arg(args, void *);
 	if (!p)
+	{
+		if (!flags->minus)
+			ft_putnchar(' ', flags->pad - 5, count);
 		*count += write(1, "(nil)", 5);
+		if (flags->minus)
+			ft_putnchar(' ', flags->pad - 5, count);
+	}
 	else
 	{
 		len = ft_ptrlen(p, 16) + 2;
@@ -209,7 +223,7 @@ void addition_flags(long int n, int *count,flags_t *flags, char *base)
 	int nbrsize;
 
 	nbrsize = ft_nbrlen(n, ft_strlen(base));
-	if (flags->dotpad > nbrsize)
+	if (flags->dotpad >= nbrsize)
 	{
 		nbrsize = flags->dotpad;
 		if (n < 0)
@@ -217,6 +231,8 @@ void addition_flags(long int n, int *count,flags_t *flags, char *base)
 	}
 	if (flags->pad > 0)
 	{
+		if (flags->dot && !flags->dotpad && !n)
+			nbrsize = 0;
 		if (flags->minus)
 		{
 			ft_putnbr_base(n, count, base, flags);
@@ -224,7 +240,7 @@ void addition_flags(long int n, int *count,flags_t *flags, char *base)
 		}
 		else if ((!flags->minus && !flags->zero) || flags->dot)
 		{
-			ft_putnchar(' ', flags->pad - nbrsize , count);
+			ft_putnchar(' ', flags->pad - nbrsize, count);
 			ft_putnbr_base(n, count, base, flags);
 		}
 		else
