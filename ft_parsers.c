@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	padsize(long int n, flags_t *flags, char *base)
+int	padsize(long int n, t_flags *flags, char *base)
 {
 	int	nbrsize;
 
@@ -26,7 +26,7 @@ int	padsize(long int n, flags_t *flags, char *base)
 	return (nbrsize);
 }
 
-void	addition_flags(long int n, int *count, flags_t *flags, char *base)
+void	addition_flags(long int n, int *count, t_flags *flags, char *base)
 {
 	int	nbrsize;
 
@@ -52,8 +52,8 @@ void	addition_flags(long int n, int *count, flags_t *flags, char *base)
 		ft_putnbr_base(n, count, base, flags);
 }
 
-void	(*search_by_flag(char c, ftf_t ctofunc[]))(int *count, va_list args,
-	flags_t *flags)
+void	(*search_by_flag(char c, t_ftf ctofunc[]))(int *count, va_list args,
+	t_flags *flags)
 {
 	int	i;
 
@@ -76,9 +76,9 @@ void	(*search_by_flag(char c, ftf_t ctofunc[]))(int *count, va_list args,
  * Or NULL if not hondler founded
  * The struct contains {0, NULL} just to give while the stop point
  */
-void	(*get_handler(char c))(int *count, va_list args, flags_t *flags)
+void	(*get_handler(char c))(int *count, va_list args, t_flags *flags)
 {
-	ftf_t	ctofunc[9];
+	t_ftf	ctofunc[9];
 
 	ctofunc[0].c = 'c';
 	ctofunc[0].f = ft_putchar;
@@ -101,7 +101,7 @@ void	(*get_handler(char c))(int *count, va_list args, flags_t *flags)
 	return (search_by_flag(c, ctofunc));
 }
 
-char	parse_flags(const char **s, flags_t *flags)
+char	parse_flags(const char **s, t_flags *flags)
 {
 	char	*valid_specs;
 

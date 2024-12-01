@@ -20,7 +20,7 @@
  *
  * Return: None
  */
-void	ft_putnbr(int *count, va_list args, flags_t *flags)
+void	ft_putnbr(int *count, va_list args, t_flags *flags)
 {
 	int	n;
 
@@ -36,7 +36,7 @@ void	ft_putnbr(int *count, va_list args, flags_t *flags)
  *
  * Return: None
  */
-void	ft_putunbr(int *count, va_list args, flags_t *flags)
+void	ft_putunbr(int *count, va_list args, t_flags *flags)
 {
 	unsigned int	n;
 
@@ -53,7 +53,7 @@ void	ft_putunbr(int *count, va_list args, flags_t *flags)
  *
  * Return: None
  */
-void	ft_putnbr16_upper(int *count, va_list args, flags_t *flags)
+void	ft_putnbr16_upper(int *count, va_list args, t_flags *flags)
 {
 	int	n;
 
@@ -72,7 +72,7 @@ void	ft_putnbr16_upper(int *count, va_list args, flags_t *flags)
  *
  * Return: None
  */
-void	ft_putnbr16_lower(int *count, va_list args, flags_t *flags)
+void	ft_putnbr16_lower(int *count, va_list args, t_flags *flags)
 {
 	int	n;
 

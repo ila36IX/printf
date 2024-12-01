@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void	init_flags(flags_t *flags)
+void	init_flags(t_flags *flags)
 {
 	flags->pad = 0;
 	flags->dotpad = 0;
@@ -30,7 +30,7 @@ int	ft_printf(const char *s, ...)
 	int		count;
 	char	c;
 	va_list	args;
-	flags_t	flags;
+	t_flags	flags;
 
 	va_start(args, s);
 	count = 0;

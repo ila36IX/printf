@@ -10,13 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef LIBFT_H
+# define LIBFT_H
 
 # include <limits.h>
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdint.h>
-int					ft_isalpha_(int c);
 
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
@@ -54,29 +55,12 @@ void				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 
-
-#ifndef rida
-	#define rida 69
-#endif
-
-#ifndef rida
-	#define rida 132564
-	#define rida 1337
-#endif
-
-
-
-#ifndef LIBFT_H
-# define LIBFT_H
-
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }					t_list;
 t_list				*ft_lstnew(void *content);
-
-#endif
 void				ft_lstadd_front(t_list **lst, t_list *data);
 int					ft_lstsize(t_list *lst);
 t_list				*ft_lstlast(t_list *lst);
@@ -87,4 +71,4 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *l, void *(*f)(void *),
 						void (*d)(void *));
 
-
+#endif

@@ -33,7 +33,7 @@ void	ft_putnchar(char c, int n, int *count)
  *
  * Return: None
  */
-void	ft_putchar(int *count, va_list args, flags_t *flags)
+void	ft_putchar(int *count, va_list args, t_flags *flags)
 {
 	char	c;
 
@@ -54,7 +54,7 @@ void	ft_putchar(int *count, va_list args, flags_t *flags)
  *
  * Return: None
  */
-void	ft_putstr(int *count, va_list args, flags_t *flags)
+void	ft_putstr(int *count, va_list args, t_flags *flags)
 {
 	char	*s;
 	int		len;
@@ -87,7 +87,7 @@ void	ft_putstr(int *count, va_list args, flags_t *flags)
  * Return: None
  */
 
-void	ft_putpersent(int *count, va_list args, flags_t *flags)
+void	ft_putpersent(int *count, va_list args, t_flags *flags)
 {
 	(void)flags;
 	(void)args;

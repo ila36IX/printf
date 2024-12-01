@@ -20,7 +20,7 @@
  *
  * Return: None
  */
-void	ft_putptr(int *count, va_list args, flags_t *flags)
+void	ft_putptr(int *count, va_list args, t_flags *flags)
 {
 	unsigned long long int	p;
 	int						len;

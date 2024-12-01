@@ -21,7 +21,7 @@ int	ft_nbrlen(long int n, int b)
 	return (ft_nbrlen(n / b, b) + 1);
 }
 
-void	prefix_zero(int nbrsize, int *count, flags_t *flags)
+void	prefix_zero(int nbrsize, int *count, t_flags *flags)
 {
 	if (flags->dot)
 		ft_putnchar('0', flags->dotpad - nbrsize, count);
@@ -44,7 +44,7 @@ void	prefix_zero(int nbrsize, int *count, flags_t *flags)
  * to the unisgned long long int, that will cause an overflew
  * so that's why we needed a custom function (look: ft_putnbr_base_big)
  */
-void	ft_putnbr_base(long int n, int *count, char *base, flags_t *flags)
+void	ft_putnbr_base(long int n, int *count, char *base, t_flags *flags)
 {
 	int	nbrsize;
 
