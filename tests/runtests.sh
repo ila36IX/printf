@@ -9,7 +9,8 @@ sleep 0.02
 echo "  ▀▀▀  ▀▀▀  ▀▀▀▀  ▀▀▀ ▀▀▀▀▀ █▪·▀▀▀▀ ▀ ▀ ▀ "
 sleep 0.2
 # Here where the linking to you libft library should be configured
-libft="-Llibft/ -lft"
+# libft="-Llibft/ -lft"
+libprintf="-L. -lftprintf"
 
 logDir="/tmp/print_logs"
 clr_off='\033[0m'
@@ -25,17 +26,17 @@ yellow='\033[0;33m'
 find tests -type f -name "*.c" | sort | while read -r file; do
 	you="$logDir/$(basename "$file" ".c").you"
 	org="$logDir/$(basename "$file" ".c").org"
-	gcc "$file" ft_printf.c helper_functions.c $libft -o run
+	gcc "$file"  $libprintf -o run
 	./run you > $you
 	if [ $? -eq 139 ]; then
 		echo "${red}Your code segFaults after:${clr_off}"
-		echo "${red}gcc "$file" ft_printf.c helper_functions.c $libft -o run && ./run you${clr_off}"
+		echo "${red}gcc "$file" $libprintf -o run && ./run you${clr_off}"
 		echo "segFault starts here" >> $you
 	fi
 	./run org > $org
 	if [ $? -eq 139 ]; then
 		echo "${red}Your code segFaults after:${clr_off}"
-		echo "${red}gcc "$file" ft_printf.c helper_functions.c $libft -o run && ./run you${clr_off}"
+		echo "${red}gcc "$file"  $libprintf -o run && ./run you${clr_off}"
 		echo "segFault starts here" >> $you
 	fi
 	# test description

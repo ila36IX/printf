@@ -4,3 +4,4 @@ runtests
 *.o
 */*.o
 printfTester/
+libftprintf.a 
