@@ -25,7 +25,7 @@ char parse_flags(const char **s, flags_t *flags)
 		flags->plus = 1;
 	else if (**s == ' ')
 		flags->space = 1;
-	else if (**s == '0' && !flags->zero && !flags->pad)
+	else if (**s == '0' && !flags->zero && !flags->pad && !flags->dotpad)
 		flags->zero = 1;
 	else if (**s == '.' && !flags->dot)
 		flags->dot = 1;
@@ -49,6 +49,7 @@ void init_flags(flags_t *flags)
 	flags->zero = 0;
 	flags->dot= 0;
 	flags->hash= 0;
+	flags->hashprefix= NULL;
 	flags->plus= 0;
 	flags->space= 0;
 }
