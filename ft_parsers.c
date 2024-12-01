@@ -12,6 +12,15 @@
 
 #include "ft_printf.h"
 
+/*
+ * padsize - Calculate the padding size for formatted output
+ *
+ * @n: The number to be padded
+ * @flags: Structure containing the current flag settings
+ * @base: The base string used for the number conversion
+ *
+ * Return: The size of padding needed for formatting.
+ */
 int	padsize(long int n, t_flags *flags, char *base)
 {
 	int	nbrsize;
@@ -26,6 +35,15 @@ int	padsize(long int n, t_flags *flags, char *base)
 	return (nbrsize);
 }
 
+/*
+ * addition_flags - Handle additional flags for formatting numbers
+ * @n: The number to be formatted
+ * @count: Pointer to the counter that keeps track of printed characters
+ * @flags: Structure containing the current flag settings
+ * @base: The base string to use for conversion (e.g., hex digits).
+ *
+ * Return: None
+ */
 void	addition_flags(long int n, int *count, t_flags *flags, char *base)
 {
 	int	nbrsize;
@@ -52,6 +70,14 @@ void	addition_flags(long int n, int *count, t_flags *flags, char *base)
 		ft_putnbr_base(n, count, base, flags);
 }
 
+/*
+ * search_by_flag - Search and return the corresponding function based
+ * on the flag
+ * @c: The flag character to search for
+ * @ctofunc: Array of structures mapping flags to corresponding functions
+ *
+ * Return: A pointer to the function associated with the given flag
+ */
 void	(*search_by_flag(char c, t_ftf ctofunc[]))(int *count, va_list args,
 	t_flags *flags)
 {
@@ -101,6 +127,13 @@ void	(*get_handler(char c))(int *count, va_list args, t_flags *flags)
 	return (search_by_flag(c, ctofunc));
 }
 
+/*
+ * parse_flags - Parse and set flags from the format string.
+ * @s: Pointer to the format string, which is updated as flags are parsed.
+ * @flags: Pointer to the structure holding the parsed flags.
+ *
+ * Return: The character immediately after the last parsed flag.
+ */
 char	parse_flags(const char **s, t_flags *flags)
 {
 	char	*valid_specs;

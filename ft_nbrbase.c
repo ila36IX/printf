@@ -12,6 +12,14 @@
 
 #include "ft_printf.h"
 
+/*
+ * ft_nbrlen - Calculate the length of a number in a given base
+ *
+ * @n: The number to calculate the length of
+ * @b: The base for the number conversion
+ *
+ * Return: The length of the number in the given base
+ */
 int	ft_nbrlen(long int n, int b)
 {
 	if (n < 0)
@@ -21,6 +29,15 @@ int	ft_nbrlen(long int n, int b)
 	return (ft_nbrlen(n / b, b) + 1);
 }
 
+/*
+ * prefix_zero - Add leading zeros to the printed number based on flags
+ *
+ * @nbrsize: The size of the number to be printed
+ * @count: Pointer to the counter that tracks printed characters
+ * @flags: Pointer to the flags structure containing formatting options
+ *
+ * Return: None
+ */
 void	prefix_zero(int nbrsize, int *count, t_flags *flags)
 {
 	if (flags->dot)
@@ -69,7 +86,16 @@ void	ft_putnbr_base(long int n, int *count, char *base, t_flags *flags)
 	ft_putnbrb_rec(n, count, base, ft_strlen(base));
 }
 
-/* this function does not hondle the case where the number is negative*/
+/*
+ * ft_putnbrb_rec - Recursively prints a number in a given base
+ *
+ * @n: The number to print
+ * @count: Pointer to the counter that tracks printed characters
+ * @base: The base to use for printing (e.g., "0123456789ABCDEF")
+ * @b: The base size (e.g., 16)
+ *
+ * Return: None
+ */
 void	ft_putnbrb_rec(long int n, int *count, char *base, int b)
 {
 	++*count;

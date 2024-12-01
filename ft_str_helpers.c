@@ -12,6 +12,12 @@
 
 #include "ft_printf.h"
 
+/*
+ * ft_putnchar - Write a character to stdout n times
+ * @c: Character to write
+ * @n: Number of times to write
+ * @count: Pointer to character count
+ */
 void	ft_putnchar(char c, int n, int *count)
 {
 	int	i;
@@ -49,6 +55,7 @@ void	ft_putchar(int *count, va_list args, t_flags *flags)
 /*
  * ft_putstr - Hondler of the s flag
  * @count: Pointer to the conter that keeps track of
+ * number of printed charachters
  * @args: Function varaidic arguments
  * @flags: Struct contains extra specifiers used with p flag
  *
@@ -78,6 +85,7 @@ void	ft_putstr(int *count, va_list args, t_flags *flags)
 	if (flags->minus)
 		ft_putnchar(' ', flags->pad - len, count);
 }
+
 /*
  * ft_putpersent - Hondler of the % flag
  * @count: Pointer to the conter that keeps track of

@@ -46,6 +46,16 @@ void	ft_putptr(int *count, va_list args, t_flags *flags)
 	}
 }
 
+/*
+ * ft_ptrlen - Calculate the number of digits needed to represent
+ * a number in a given base (no sign).
+ *
+ * @n: The number to calculate the length for.
+ * @b: The base to represent the number in (e.g., 10 for decimal,
+ * 16 for hexadecimal).
+ *
+ * Return: The number of digits required.
+ */
 int	ft_ptrlen(unsigned long long int n, int b)
 {
 	if (n < (unsigned long long int)b)
@@ -60,7 +70,7 @@ int	ft_ptrlen(unsigned long long int n, int b)
  * you need to change it's prototype wich will cause
  * losing some types that are not unsigned
  *
- * @n:Big nuber that can hondle into ptr max value
+ * @n:Big number that can hondle into ptr max value
  * @count: Pointer to the counter that keeps track of
  * many printed characters, that varaible that will be
  * returned later from printf

@@ -12,6 +12,12 @@
 
 #include "ft_printf.h"
 
+/*
+ * init_flags - Initialize a t_flags structure to its default state.
+ * @flags: Pointer to the t_flags structure to initialize.
+ *
+ * Return: None
+ */
 void	init_flags(t_flags *flags)
 {
 	flags->pad = 0;
@@ -25,6 +31,13 @@ void	init_flags(t_flags *flags)
 	flags->space = 0;
 }
 
+/*
+ * ft_printf - A custom implementation of the printf function.
+ *
+ * @s: The format string containing directives and plain text.
+ * @...: Variable arguments corresponding to the format specifiers in @s.
+ * Return: The total number of characters printed.
+ */
 int	ft_printf(const char *s, ...)
 {
 	int		count;
