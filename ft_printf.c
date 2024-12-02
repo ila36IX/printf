@@ -63,5 +63,6 @@ int	ft_printf(const char *s, ...)
 			count++;
 		}
 	}
+	va_end(args);
 	return (count);
 }
