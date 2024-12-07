@@ -9,34 +9,40 @@ void test_zeroMinusPresesion_flag(int (*f)(const char *s, ...))
 {
 	int return_value;
 
-	return_value = f("%0d", INT_MAX);
+	/*return_value = f("%0d", INT_MAX);*/
+	/*printf("\nReturn value: [%d]\n", return_value);*/
+	/*return_value = f("%016d", INT_MAX);*/
+	/*printf("\nReturn value: [%d]\n", return_value);*/
+	/*return_value = f("%010d", INT_MAX);*/
+	/*printf("\nReturn value: [%d]\n", return_value);*/
+	/*return_value = f("%20d", INT_MIN);*/
+	/*printf("\nReturn value: [%d]\n", return_value);*/
+	/*return_value = f("%11d", INT_MIN);*/
+	/*printf("\nReturn value: [%d]\n", return_value);*/
+	/*return_value = f("%010d", 1);*/
+	/*printf("\nReturn value: [%d]\n", return_value);*/
+	/*return_value = f("%010d", 18);*/
+	/*printf("\nReturn value: [%d]\n", return_value);*/
+	/*return_value = f("%0d", -1);*/
+	/*printf("\nReturn value: [%d]\n", return_value);*/
+	/*return_value = f("%0d", 0);*/
+	/*printf("\nReturn value: [%d]\n", return_value);*/
+	/*return_value = f("%0d", -1337);*/
+	/*printf("\nReturn value: [%d]\n", return_value);*/
+	/*return_value = f("%010c", 'a');*/
+	/*printf("\nReturn value: [%d]\n", return_value);*/
+	/*return_value = f("%010x", INT_MAX);*/
+	/*printf("\nReturn value: [%d]\n", return_value);*/
+	/*return_value = f("%010X", UINT_MAX);*/
+	/*printf("\nReturn value: [%d]\n", return_value);*/
+	return_value = f("%+p", NULL);
 	printf("\nReturn value: [%d]\n", return_value);
-	return_value = f("%016d", INT_MAX);
-	printf("\nReturn value: [%d]\n", return_value);
-	return_value = f("%010d", INT_MAX);
-	printf("\nReturn value: [%d]\n", return_value);
-	return_value = f("%20d", INT_MIN);
-	printf("\nReturn value: [%d]\n", return_value);
-	return_value = f("%11d", INT_MIN);
-	printf("\nReturn value: [%d]\n", return_value);
-	return_value = f("%010d", 1);
-	printf("\nReturn value: [%d]\n", return_value);
-	return_value = f("%010d", 18);
-	printf("\nReturn value: [%d]\n", return_value);
-	return_value = f("%0d", -1);
-	printf("\nReturn value: [%d]\n", return_value);
-	return_value = f("%0d", 0);
-	printf("\nReturn value: [%d]\n", return_value);
-	return_value = f("%0d", -1337);
-	printf("\nReturn value: [%d]\n", return_value);
-	return_value = f("%010c", 'a');
-	printf("\nReturn value: [%d]\n", return_value);
-	return_value = f("%010x", INT_MAX);
-	printf("\nReturn value: [%d]\n", return_value);
-	return_value = f("%010X", UINT_MAX);
-	printf("\nReturn value: [%d]\n", return_value);
-	return_value = f("%05X", UINT_MAX);
-	printf("\nReturn value: [%d]\n", return_value);
+
+	return_value = f(" %p", &return_value);
+	printf("\nreturn value: [%d]\n", return_value);
+
+	return_value = f("+%p", &return_value);
+	printf("\nreturn value: [%d]\n", return_value);
 }
 
 int main(int ac, char **av)

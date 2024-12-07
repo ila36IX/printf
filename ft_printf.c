@@ -31,6 +31,35 @@ void	init_flags(t_flags *flags)
 	flags->space = 0;
 }
 
+void	ft_printf_helper(const char *s, int *count, va_list args)
+{
+	t_flags	flags;
+	char	c;
+	char	*s_back;
+
+	while (s && *s)
+	{
+		if (*s == '%')
+		{
+			if (!s[1])
+				break ;
+			s++;
+			s_back = (char *)s;
+			init_flags(&flags);
+			c = parse_flags(&s, &flags);
+			if (c)
+				get_handler(c)(count, args, &flags);
+			else
+				s = s_back;
+		}
+		else
+		{
+			write(1, s++, 1);
+			(*count)++;
+		}
+	}
+}
+
 /*
  * ft_printf - A custom implementation of the printf function.
  *
@@ -41,28 +70,13 @@ void	init_flags(t_flags *flags)
 int	ft_printf(const char *s, ...)
 {
 	int		count;
-	char	c;
 	va_list	args;
-	t_flags	flags;
 
+	if (!s)
+		return (-1);
 	va_start(args, s);
 	count = 0;
-	while (s && *s)
-	{
-		if (*s == '%')
-		{
-			s++;
-			init_flags(&flags);
-			c = parse_flags(&s, &flags);
-			if (c)
-				get_handler(c)(&count, args, &flags);
-		}
-		else
-		{
-			write(1, s++, 1);
-			count++;
-		}
-	}
+	ft_printf_helper(s, &count, args);
 	va_end(args);
 	return (count);
 }

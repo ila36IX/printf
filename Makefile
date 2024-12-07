@@ -13,8 +13,7 @@ all: $(NAME)
 $(NAME): $(LIBFT_OBJ) $(PRINTF_OBJ)
 	ar rsc $@ $?
 
-bonus: $(LIBFT_OBJ) $(PRINTF_OBJ)
-	ar rsc $@ $?
+bonus: $(NAME)
 
 clean:
 	@$(RM) $(LIBFT_OBJ) $(PRINTF_OBJ)

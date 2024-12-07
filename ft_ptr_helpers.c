@@ -33,6 +33,8 @@ void	ft_putptr(int *count, va_list args, t_flags *flags)
 		*count += write(1, "(nil)", 5);
 		if (flags->minus)
 			ft_putnchar(' ', flags->pad - 5, count);
+		if (flags->plus)
+			ft_putnchar('+', 1, count);
 	}
 	else
 	{
