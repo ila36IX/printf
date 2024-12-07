@@ -60,9 +60,9 @@ char		parse_flags(const char **s, t_flags *flags);
 void		init_flags(t_flags *flags);
 void		ft_putnbr16_upper(int *count, va_list args, t_flags *flags);
 void		ft_putnbr16_lower(int *count, va_list args, t_flags *flags);
-size_t	ft_strlen(const char *s);
-char	*ft_strchr(const char *s, int c);
-int	ft_isdigit(int c);
+size_t		ft_strlen(const char *s);
+char		*ft_strchr(const char *s, int c);
+int			ft_isdigit(int c);
 
 # define BASE16_LOWER "0123456789abcdef"
 # define BASE16_UPPER "0123456789ABCDEF"
