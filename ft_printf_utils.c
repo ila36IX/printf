@@ -1,31 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcmp.c                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aljbari <aljbari@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 22:03:58 by aljbari           #+#    #+#             */
-/*   Updated: 2024/11/06 05:27:59 by aljbari          ###   ########.fr       */
+/*   Created: 2024/11/04 18:46:42 by aljbari           #+#    #+#             */
+/*   Updated: 2024/11/06 04:34:03 by aljbari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-int	ft_memcmp(const void *s1, const void *s2, size_t n)
+size_t	ft_strlen(const char *s)
 {
-	size_t			i;
-	unsigned char	a;
-	unsigned char	b;
+	size_t	i;
 
 	i = 0;
-	while (i < n)
-	{
-		a = ((unsigned char *)s1)[i];
-		b = ((unsigned char *)s2)[i];
-		if (a != b)
-			return (a - b);
+	while (s[i])
 		i++;
+	return (i);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
 	}
+	if ((char)c == 0)
+		return ((char *)s);
+	return (NULL);
+}
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
 	return (0);
 }
+
